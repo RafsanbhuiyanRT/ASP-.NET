@@ -23,6 +23,12 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+//app.Use(async (ctx, next) =>
+//{
+//    var check = ctx.Request;
+//    await next();
+//    var res = ctx.Response;
+//});
 app.UseRouting();
 
 app.UseAuthorization();
