@@ -18,10 +18,11 @@
             <tr>
                 <th>
                     Category Name
-                </th>
+                </th> 
                 <th>
                     Disply Order
                 </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -30,12 +31,20 @@
                 <tr>
                     <td>@ob.Name</td>
                     <td>@ob.DisplayOrder</td>
+                    <td>
+                        <div class ="w-75 btn-group" role="group">
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@ob.ID" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@ob.ID" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </a>
+                        </div>
+                    </td>                                  
                 </tr>
             }
-
         </tbody>
-
-
     </table>
 </div>
 

@@ -15,11 +15,12 @@ public class CategoryController : Controller
         List<Category> ObjCatagoryList = _db.Categories.ToList();
         return View(ObjCatagoryList);
     }
+
+   //---------- Add item in a databases----------//
     public IActionResult Create()
     {
         return View();
     }
-
     [HttpPost]
     public IActionResult Create(Category obj)
     {
@@ -35,6 +36,67 @@ public class CategoryController : Controller
         }
        
         return View();
+    }
+
+    //-------Update item in a databases----------//
+    public IActionResult Edit(int? id)
+    {
+        if(id == null || id == 0) {
+            return NotFound();
+        }
+        Category? categoryFromDb  = _db.Categories.Find(id);
+       // Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.ID ==id);
+        //Category? categoryFromDb2 = _db.Categories.Where(u=>u.ID==id).FirstOrDefault();
+        
+        if(categoryFromDb == null)
+        {
+            return NotFound();
+        }
+        return View(categoryFromDb);
+    }
+    [HttpPost]
+    public IActionResult Edit(Category obj)
+    {
+        if (obj.Name == obj.DisplayOrder.ToString())
+        {
+            ModelState.AddModelError("Name", "The disply order cannot match the name");
+        }
+        if (ModelState.IsValid)
+        {
+            _db.Categories.Update(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        return View();
+    }
+    //--------- Delete item in the databases ----------//
+    public IActionResult Delete(int? id)
+    {
+        if(id == null || id == 0)
+        {
+            return NotFound();
+        }
+        Category? CategoryFormDb = _db.Categories.Find(id);
+
+        if(CategoryFormDb == null)
+        {
+            return NotFound();
+        }
+        return View(CategoryFormDb);
+    }
+
+    [HttpPost,ActionName("Delete")]
+    public IActionResult DeletePost(int? id)
+    {
+        Category? obj = _db.Categories.Find(id);
+        if (obj == null)
+        {
+            return NotFound();
+        }      
+        _db.Categories.Remove(obj);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
     }
 
 }
